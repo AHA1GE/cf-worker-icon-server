@@ -22,10 +22,12 @@ export default {
 };
 
 async function returnSvgIcon(svg: string) {
-	// new headers, set content type to image/svg+xml, and cache control to static 1 year
+	// new headers, set content type to image/svg+xml, no sniff, and cache control to static 1 year
 	const headers = new Headers();
 	headers.set('Content-Type', 'image/svg+xml');
+	headers.set('X-Content-Type-Options', 'nosniff');
 	headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+
 	// return response with svg content
 	return new Response(svg, { headers });
 }
@@ -45,6 +47,7 @@ async function returnFetchIcon(url: URL) {
 		}
 		// clone headers, set cache control to static 1 year
 		const headers = new Headers(iconResponse.headers);
+		headers.set('X-Content-Type-Options', 'nosniff');
 		headers.set('Cache-Control', 'public, max-age=31536000, immutable');
 		// convert the response body to a Uint8Array
 		const body = await iconResponse.arrayBuffer();

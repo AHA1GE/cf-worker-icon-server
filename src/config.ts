@@ -32,6 +32,7 @@ const iconsSvg = {
 // use prefix * to match all subdomains, use suffix * to match all paths
 // always put more specific rules before more general rules
 const iconConfig: IconConfig = {
+    'v.ahaigege.com/favicon.ico': { sourceType: 'svg', source: iconsSvg.lobeChatIconSvg },
     'v.ahaigege.com/*': { sourceType: 'svg', source: iconsSvg.lobeChatIconSvg },
     'gpt.dofor.fun/*': { sourceType: 'fetch', source: iconsUri.ChinaLlmIconUri },
     'next.dofor.fun/*': { sourceType: 'svg', source: iconsSvg.nextChatIconSvg },
