@@ -63,18 +63,22 @@ function match(url: URL): IconSetup | undefined {
 	// Get the hostname and pathname
 	const hostname = url.hostname;
 	const pathname = url.pathname;
+	console.log('matching "' + hostname + pathname + '"');
 
 	// If the URL has query, hash, or search params, it seems not for favicon, return undefined
 	if (url.search || url.hash || url.searchParams.size) {
 		console.log('URL has query, hash, or search params, it seems not for favicon, leave it intact');
 		return undefined;
+	} else {
+		console.log('URL has no query, hash, or search params, continue');
 	}
 
-	// If the URL does not end with ***icon.***, it seems not for favicon, return undefined
-	// This pattern matches common favicon file extensions (ico, png, svg)
+	// If the URL does not end with *icon.ico/*icon.png/*icon.svg , it seems not for favicon, return undefined
 	if (!/\bicon\.(ico|png|svg)$/.test(pathname)) {
 		console.log('URL does not end with ***icon.***, it seems not for favicon, leave it intact');
 		return undefined;
+	} else {
+		console.log('URL ends with ***icon.***, continue');
 	}
 
 	// iconConfig uses prefix * to match all subdomains, use suffix * to match all paths
