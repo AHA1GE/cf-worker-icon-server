@@ -74,7 +74,7 @@ function match(url: URL): IconSetup | undefined {
 	}
 
 	// If the URL does not end with *icon.ico/*icon.png/*icon.svg , it seems not for favicon, return undefined
-	if (!/\bicon\.(ico|png|svg)$/.test(pathname)) {
+	if (!/icon\.(ico|png|svg)$/.test(pathname)) {
 		console.log('URL does not end with ***icon.***, it seems not for favicon, leave it intact');
 		return undefined;
 	} else {
@@ -94,5 +94,6 @@ function match(url: URL): IconSetup | undefined {
 	});
 
 	// Return the matched icon setup
+	console.log('matched:', matched);
 	return matched ? matched[1] : undefined;
 }
