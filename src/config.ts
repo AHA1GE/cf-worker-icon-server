@@ -34,7 +34,9 @@ const iconsSvg = {
 const iconConfig: IconConfig = {
     'v.ahaigege.com/favicon.ico': { sourceType: 'svg', source: iconsSvg.lobeChatIconSvg },
     'v.ahaigege.com/*': { sourceType: 'svg', source: iconsSvg.lobeChatIconSvg },
+    'gpt.dofor.fun/favicon.ico': { sourceType: 'fetch', source: iconsUri.ChinaLlmIconUri },
     'gpt.dofor.fun/*': { sourceType: 'fetch', source: iconsUri.ChinaLlmIconUri },
+    'next.dofor.fun/favicon.ico': { sourceType: 'svg', source: iconsSvg.nextChatIconSvg },
     'next.dofor.fun/*': { sourceType: 'svg', source: iconsSvg.nextChatIconSvg },
 };
 
