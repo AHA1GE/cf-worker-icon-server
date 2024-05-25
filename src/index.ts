@@ -63,14 +63,14 @@ function match(url: URL): IconSetup | undefined {
 	// Get the hostname and pathname
 	const hostname = url.hostname;
 	const pathname = url.pathname;
-	console.log('matching X_x_' + hostname + pathname + '_x_X');
+	// console.log('matching X_x_' + hostname + pathname + '_x_X');
 
 	// If the URL has query, hash, or search params, it seems not for favicon, return undefined
 	if (url.search || url.hash || url.searchParams.size) {
 		console.log('URL has query, hash, or search params, it seems not for favicon, leave it intact');
 		return undefined;
 	} else {
-		console.log('URL has no query, hash, or search params, continue');
+		// console.log('URL has no query, hash, or search params, continue');
 	}
 
 	// If the URL does not end with *icon.ico/*icon.png/*icon.svg , it seems not for favicon, return undefined
@@ -78,7 +78,7 @@ function match(url: URL): IconSetup | undefined {
 		console.log('URL does not end with ***icon.***, it seems not for favicon, leave it intact');
 		return undefined;
 	} else {
-		console.log('URL ends with ***icon.***, continue');
+		// console.log('URL ends with ***icon.***, continue');
 	}
 
 	// iconConfig uses prefix * to match all subdomains, use suffix * to match all paths
@@ -88,7 +88,7 @@ function match(url: URL): IconSetup | undefined {
 		// Replace * with .*, and escape other special characters
 		const regexPattern = `^${pattern.replace(/\./g, '\\.').replace(/\*/g, '.*')}$`;
 		const regex = new RegExp(regexPattern);
-		console.log('matching "' + hostname + pathname + '" with pattern "' + regexPattern + '"')
+		// console.log('matching "' + hostname + pathname + '" with pattern "' + regexPattern + '"')
 		// Test if the hostname and pathname match the pattern
 		return regex.test(hostname + pathname);
 	});
