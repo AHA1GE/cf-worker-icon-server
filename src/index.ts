@@ -3,14 +3,15 @@
  */
 
 import { iconConfig, faviconGetter } from './config';
-import { IconConfig, IconSetup } from './types';
+import { IconSetup } from './types';
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		const userRequest = new URL(request.url);
-		const iconSetup = match(userRequest);
+		const userVisitingUrl = new URL(request.url);
+		const iconSetup = match(userVisitingUrl);
 		if (!iconSetup) {
-			return new Response('No icon setup found', { status: 404 });
+			// if not matched, leave the user request intact and proceed
+			return fetch(request) as unknown as Response;
 		} else if (iconSetup.sourceType === 'svg') {
 			return returnSvgIcon(iconSetup.source as string);
 		} else if (iconSetup.sourceType === 'fetch') {
@@ -59,21 +60,33 @@ async function returnFetchIcon(url: URL) {
  * Match the url with the iconConfig, return the matched icon setup
  */
 function match(url: URL): IconSetup | undefined {
-	const { hostname } = url;
-	const keys = Object.keys(iconConfig);
-	// find the first matched key
-	const matchedKey = keys.find(key => {
-		if (key.startsWith('*') && key.endsWith('*')) {
-			return hostname.includes(key.slice(1, -1));
-		} else if (key.startsWith('*')) {
-			return hostname.endsWith(key.slice(1));
-		} else if (key.endsWith('*')) {
-			return hostname.startsWith(key.slice(0, -1));
-		} else {
-			return hostname === key;
-		}
-	});
-	// return the matched icon setup
-	return matchedKey ? iconConfig[matchedKey] : undefined;
+	// Get the hostname and pathname
+	const hostname = url.hostname;
+	const pathname = url.pathname;
 
+	// If the URL has query, hash, or search params, it seems not for favicon, return undefined
+	if (url.search || url.hash || url.searchParams.size) {
+		return undefined;
+	}
+
+	// If the URL does not end with ***icon.***, it seems not for favicon, return undefined
+	// This pattern matches common favicon file extensions (ico, png, svg)
+	if (!/\bicon\.(ico|png|svg)$/.test(pathname)) {
+		return undefined;
+	}
+
+	// iconConfig uses prefix * to match all subdomains, use suffix * to match all paths
+	// For example: *.example.com/* will match all subdomains and all paths of example.com
+	// Match the URL with the iconConfig
+	const matched = Object.entries(iconConfig).find(([pattern]) => {
+		// Replace * with .*, and escape other special characters
+		const regexPattern = `^${pattern.replace(/\./g, '\\.').replace(/\*/g, '.*')}$`;
+		const regex = new RegExp(regexPattern);
+
+		// Test if the hostname and pathname match the pattern
+		return regex.test(hostname + pathname);
+	});
+
+	// Return the matched icon setup
+	return matched ? matched[1] : undefined;
 }
