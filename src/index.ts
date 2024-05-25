@@ -66,12 +66,14 @@ function match(url: URL): IconSetup | undefined {
 
 	// If the URL has query, hash, or search params, it seems not for favicon, return undefined
 	if (url.search || url.hash || url.searchParams.size) {
+		console.log('URL has query, hash, or search params, it seems not for favicon, leave it intact');
 		return undefined;
 	}
 
 	// If the URL does not end with ***icon.***, it seems not for favicon, return undefined
 	// This pattern matches common favicon file extensions (ico, png, svg)
 	if (!/\bicon\.(ico|png|svg)$/.test(pathname)) {
+		console.log('URL does not end with ***icon.***, it seems not for favicon, leave it intact');
 		return undefined;
 	}
 
@@ -82,7 +84,7 @@ function match(url: URL): IconSetup | undefined {
 		// Replace * with .*, and escape other special characters
 		const regexPattern = `^${pattern.replace(/\./g, '\\.').replace(/\*/g, '.*')}$`;
 		const regex = new RegExp(regexPattern);
-
+		console.log('matching "' + hostname + pathname + '" with pattern "' + regexPattern + '"')
 		// Test if the hostname and pathname match the pattern
 		return regex.test(hostname + pathname);
 	});
