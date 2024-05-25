@@ -63,7 +63,7 @@ function match(url: URL): IconSetup | undefined {
 	// Get the hostname and pathname
 	const hostname = url.hostname;
 	const pathname = url.pathname;
-	console.log('matching "' + hostname + pathname + '"');
+	console.log('matching X_x_' + hostname + pathname + '_x_X');
 
 	// If the URL has query, hash, or search params, it seems not for favicon, return undefined
 	if (url.search || url.hash || url.searchParams.size) {
