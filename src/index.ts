@@ -81,7 +81,7 @@ function match(url: URL): IconSetup | undefined {
 		console.log('URL does not end with ***icon.***, it seems not for favicon, leave it intact');
 		return undefined;
 	} else {
-		// console.log('URL ends with ***icon.***, continue');
+		// console.log('URL ends with *icon.(ico|png|svg), continue');
 	}
 
 	// iconConfig uses prefix * to match all subdomains, use suffix * to match all paths
