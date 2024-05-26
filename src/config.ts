@@ -7,7 +7,7 @@ function faviconGetter(url: string, size: number = 32) {
 const iconsUri = {
     defaultIconUri: new URL('https://ysun.site/favicon.ico'),
     genShinIconUri: new URL('https://genshin.hoyoverse.com/favicon.ico'),
-    ChinaLlmIconUri: new URL('https://www.gov.cn/favicon.ico'),
+    ChinaLlmIconUri: new URL('https://www.gov.cn/images/gtrs_logo_lt.png'),
 }
 
 const iconsSvg = {
